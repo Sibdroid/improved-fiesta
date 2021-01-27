@@ -1,0 +1,71 @@
+# this checks if the quality level is an integer between 0 and 600
+while True:
+    try:
+        quality_level = int(input("what is your quality level? "))
+    except ValueError:
+        print("please enter an integer")
+    else:
+        if 0 < quality_level < 600:
+            break
+        else:
+            print("please enter a number between 0 and 600")
+# this checks if the difficulty level is an integer between 0 and 1200
+while True:
+    try:
+        difficulty_level = int(input("what is the difficulty level? "))
+    except ValueError:
+        print("please enter an integer")
+    else:
+        if 0 < difficulty_level < 1200:
+            break
+        else:
+            print("please enter a number between 0 and 1200")
+# this checks if the amount of times you try is an integer between 0 and 100
+while True:
+    try:
+        attempt_number = int(input("how many times do you want to try? "))
+    except ValueError:
+        print("please enter an integer")
+    else:
+        if 0 < attempt_number < 100:
+            break
+        else:
+            print("please enter a number between 0 and 100")
+# if you try more than once, you may want to or not to round down the chance
+if int(attempt_number) > 1:
+    round_yes_no = input("should the result be rounded down? ")
+# this calculates the basic probability, without a number of tries
+basic_probability = int(0.6 * int(quality_level) / int(difficulty_level) * 100)
+# if you try just once, then you can ignore the number of tries
+if int(attempt_number) == 1:
+    advanced_probability = basic_probability
+# this calculates the probability, taking amount of tries into consideration
+elif int(attempt_number) > 1:
+    if round_yes_no == "yes":
+        advanced_probability = int(((1 - ((1 - int(basic_probability) / 100) ** int(attempt_number))) * 100))
+    if round_yes_no == "no":
+        advanced_probability = ((1 - ((1 - int(basic_probability) / 100) ** int(attempt_number))) * 100)
+# this adds the flavor of how hard the challenge is, just like in the game
+if 0 <= int(advanced_probability) <= 10:
+    difficulty_fluff = "an almost impossible" 
+elif 11 <= int(advanced_probability) <= 30:
+    difficulty_fluff = "a high-risk"
+elif 31 <= int(advanced_probability) <= 40:
+    difficulty_fluff = "a tough"
+elif 41 <= int(advanced_probability) <= 50:
+    difficulty_fluff = "a very chancy"
+elif 51 <= int(advanced_probability) <= 60:
+    difficulty_fluff = "a chancy"
+elif 61 <= int(advanced_probability) <= 70:
+    difficulty_fluff = "a modest"
+elif 71 <= int(advanced_probability) <= 80:
+    difficulty_fluff = "a very modest"
+elif 81 <= int(advanced_probability) <= 90:
+    difficulty_fluff = "a low-risk"
+elif int(advanced_probability) >= 91:
+    difficulty_fluff = "a straightforward"
+# if the probability is not in the range of 0 and 100, this is printed instead
+else:
+    difficulty_fluff = "a what the h__l"
+# this prints out all the stuff
+print (str(advanced_probability) + "%" + ", " + difficulty_fluff + " challenge")
